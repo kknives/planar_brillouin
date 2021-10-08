@@ -1,6 +1,7 @@
 build
 subprojects/*
 !subprojects/fmt.wrap
+!subprojects/eigen.wrap
 # Prerequisites
 *.d
 
