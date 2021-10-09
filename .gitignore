@@ -3,6 +3,7 @@ build
 subprojects/*
 !subprojects/fmt.wrap
 !subprojects/eigen.wrap
+!subprojects/cairo.wrap
 # Prerequisites
 *.d
 
