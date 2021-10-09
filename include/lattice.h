@@ -2,14 +2,19 @@
 
 #include <Eigen/Dense>
 
-typedef Eigen::Matrix<int, 1, 2> P_Vec;
-typedef Eigen::Matrix<int, 2, 2> BasisMat;
+typedef Eigen::Matrix<float, 2, 1> P_Vec;
+typedef Eigen::Matrix<float, 2, 2> BasisMat;
+typedef std::unordered_map<int, P_Vec> Lattice;
 
 auto
-find_immediate(P_Vec& p, BasisMat& basis) -> Eigen::Matrix<int, 4, 2>;
+draw(Lattice& graph) -> void;
 
 auto
-find_vertices(int zones) -> void;
+find_immediate(P_Vec& p, BasisMat& basis) -> Eigen::Matrix<float, 2, 4>;
+
+auto
+find_vertices(int zones, BasisMat basis, std::unordered_map<int, P_Vec>& r_sq)
+  -> void;
 // template<class V>
 // struct Position
 // {
