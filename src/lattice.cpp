@@ -4,7 +4,7 @@
 #include <fmt/core.h>
 
 auto
-draw_zone(cairo_t* cr, Lattice& graph) -> void
+draw_zone(cairo_t* cr, Lattice& graph, int sf) -> void
 {
   auto rot_45 = Eigen::Rotation2D<float>(asin(1));
 
@@ -13,14 +13,13 @@ draw_zone(cairo_t* cr, Lattice& graph) -> void
   for (const auto& [r_sq, p] : graph) {
 
     auto scaled_p =
-      (20 * p) / 2; // Taking midpoint of scale_factor*p and origin
+      (sf * p) / 2; // Taking midpoint of scale_factor*p and origin
     cairo_move_to(cr, scaled_p(0), scaled_p(1));
     for (P_Vec rot_p = rot_45 * scaled_p; !rot_p.isApprox(scaled_p);
          rot_p = rot_45 * rot_p) {
       cairo_line_to(cr, std::roundf(rot_p(0)), std::roundf(rot_p(1)));
       cairo_stroke(cr);
       cairo_move_to(cr, std::roundf(rot_p(0)), std::roundf(rot_p(1)));
-      fmt::print("{},{}\n", std::roundf(rot_p(0)), std::roundf(rot_p(1)));
     }
     cairo_line_to(cr, scaled_p(0), scaled_p(1));
     cairo_stroke(cr);
@@ -28,18 +27,20 @@ draw_zone(cairo_t* cr, Lattice& graph) -> void
 }
 
 auto
-draw(Lattice& graph) -> void
+draw(Lattice& graph, int sf, int size, std::string filename) -> void
 {
   cairo_surface_t* surface =
-    cairo_image_surface_create(CAIRO_FORMAT_ARGB32, 240, 240);
+    cairo_image_surface_create(CAIRO_FORMAT_ARGB32, size, size);
   cairo_t* cr = cairo_create(surface);
 
-  cairo_translate(cr, 120, 120);
-  draw_zone(cr, graph);
+  cairo_translate(cr, size / 2, size / 2);
+  fmt::print("[+] Drawing...\n");
+  draw_zone(cr, graph, sf);
 
   cairo_destroy(cr);
-  cairo_surface_write_to_png(surface, "zones.png");
+  cairo_surface_write_to_png(surface, filename.c_str());
   cairo_surface_destroy(surface);
+  fmt::print("[+] Written to file {}\n", filename);
 }
 
 auto
@@ -77,6 +78,7 @@ find_vertices(int zones, BasisMat basis, std::unordered_map<int, P_Vec>& r_sq)
     }
     position = nearest.col(0);
   }
-  for (const auto& [k, v] : r_sq)
-    fmt::print("{}:({},{})\n", k, v(0), v(1));
+  fmt::print("[+] Found {} zones\n", f_zones);
+  // for (const auto& [k, v] : r_sq)
+  // fmt::print("{}:({},{})\n", k, v(0), v(1));
 }

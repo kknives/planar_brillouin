@@ -8,7 +8,7 @@ typedef Eigen::Matrix<float, 2, 2> BasisMat;
 typedef std::unordered_map<int, P_Vec> Lattice;
 
 auto
-draw(Lattice& graph) -> void;
+draw(Lattice& graph, int sf, int size, std::string filename) -> void;
 
 auto
 find_immediate(P_Vec& p, BasisMat& basis) -> Eigen::Matrix<float, 2, 4>;
