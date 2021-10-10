@@ -10,7 +10,7 @@ main()
   basis << 1, 0, 0, 1;
 
   auto vert_store = Lattice{};
-  find_vertices(1, basis, vert_store);
+  find_vertices(100, basis, vert_store);
 
   draw(vert_store);
 }
@@ -19,22 +19,23 @@ auto
 draw_zone(cairo_t* cr, Lattice& graph) -> void
 {
   auto rot_45 = Eigen::Rotation2D<float>(asin(1));
-  cairo_set_line_width(cr, 3);
-  cairo_set_source_rgb(cr, 0.69, 0.19, 0);
 
+  cairo_set_line_width(cr, 2);
+  cairo_set_source_rgb(cr, 0, 0.19, 0.69);
   for (const auto& [r_sq, p] : graph) {
-    auto scaled_p = 10 * p;
 
+    auto scaled_p =
+      (20 * p) / 2; // Taking midpoint of scale_factor*p and origin
     cairo_move_to(cr, scaled_p(0), scaled_p(1));
     for (P_Vec rot_p = rot_45 * scaled_p; !rot_p.isApprox(scaled_p);
          rot_p = rot_45 * rot_p) {
       cairo_line_to(cr, std::roundf(rot_p(0)), std::roundf(rot_p(1)));
       cairo_stroke(cr);
+      cairo_move_to(cr, std::roundf(rot_p(0)), std::roundf(rot_p(1)));
       fmt::print("{},{}\n", std::roundf(rot_p(0)), std::roundf(rot_p(1)));
     }
-
-    // cairo_set_source_rgba(cr, 1, 0, 0, 0.80);
-    // cairo_fill(cr);
+    cairo_line_to(cr, scaled_p(0), scaled_p(1));
+    cairo_stroke(cr);
   }
 }
 
@@ -49,7 +50,7 @@ draw(Lattice& graph) -> void
   draw_zone(cr, graph);
 
   cairo_destroy(cr);
-  cairo_surface_write_to_png(surface, "hello.png");
+  cairo_surface_write_to_png(surface, "zones.png");
   cairo_surface_destroy(surface);
 }
 
