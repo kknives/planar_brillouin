@@ -1,6 +1,6 @@
 #include "lattice.h"
+#include <Eigen/Geometry>
 #include <bits/stdc++.h>
-#include <cairo.h>
 #include <fmt/core.h>
 
 int
@@ -8,23 +8,45 @@ main()
 {
   auto basis = BasisMat{};
   basis << 1, 0, 0, 1;
-  cairo_test();
-  find_vertices(5, basis);
+
+  auto vert_store = Lattice{};
+  find_vertices(1, basis, vert_store);
+
+  draw(vert_store);
 }
 
 auto
-cairo_test() -> void
+draw_zone(cairo_t* cr, Lattice& graph) -> void
+{
+  auto rot_45 = Eigen::Rotation2D<float>(asin(1));
+  cairo_set_line_width(cr, 3);
+  cairo_set_source_rgb(cr, 0.69, 0.19, 0);
+
+  for (const auto& [r_sq, p] : graph) {
+    auto scaled_p = 10 * p;
+
+    cairo_move_to(cr, scaled_p(0), scaled_p(1));
+    for (P_Vec rot_p = rot_45 * scaled_p; !rot_p.isApprox(scaled_p);
+         rot_p = rot_45 * rot_p) {
+      cairo_line_to(cr, std::roundf(rot_p(0)), std::roundf(rot_p(1)));
+      cairo_stroke(cr);
+      fmt::print("{},{}\n", std::roundf(rot_p(0)), std::roundf(rot_p(1)));
+    }
+
+    // cairo_set_source_rgba(cr, 1, 0, 0, 0.80);
+    // cairo_fill(cr);
+  }
+}
+
+auto
+draw(Lattice& graph) -> void
 {
   cairo_surface_t* surface =
-    cairo_image_surface_create(CAIRO_FORMAT_ARGB32, 240, 80);
+    cairo_image_surface_create(CAIRO_FORMAT_ARGB32, 240, 240);
   cairo_t* cr = cairo_create(surface);
 
-  cairo_select_font_face(
-    cr, "serif", CAIRO_FONT_SLANT_NORMAL, CAIRO_FONT_WEIGHT_BOLD);
-  cairo_set_font_size(cr, 32.0);
-  cairo_set_source_rgb(cr, 0.0, 0.0, 1.0);
-  cairo_move_to(cr, 10.0, 50.0);
-  cairo_show_text(cr, "Hello, world");
+  cairo_translate(cr, 120, 120);
+  draw_zone(cr, graph);
 
   cairo_destroy(cr);
   cairo_surface_write_to_png(surface, "hello.png");
