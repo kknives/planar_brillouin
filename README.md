@@ -5,7 +5,9 @@ the approach is general enough to be applied to any lattice with some kind of pl
 symmetry.
 
 ## Usage
-`pb zone 4 --scale=20 --size=120 -o zones.png`
+```
+pb zone 4 --scale=20 --size=120 -o zones.png
+```
 The above example draws 4 Brillouin zones, then scales them by a factor of 20,
 and writes them to zones.png as a 120x120 image.
 
