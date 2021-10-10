@@ -1,9 +1,7 @@
 build
 *.png
 subprojects/*
-!subprojects/fmt.wrap
-!subprojects/eigen.wrap
-!subprojects/cairo.wrap
+!subprojects/*.wrap
 # Prerequisites
 *.d
 
