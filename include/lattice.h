@@ -1,6 +1,7 @@
 #pragma once
 
 #include <Eigen/Dense>
+#include <cairo.h>
 
 typedef Eigen::Matrix<float, 2, 1> P_Vec;
 typedef Eigen::Matrix<float, 2, 2> BasisMat;
