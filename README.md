@@ -35,9 +35,10 @@ Source at: https://github.com/kknives/planar_brillouin
 
 ## Building
 This project uses Meson and its Wrap dependency system.
-(You can follow this guide to install Meson)[https://mesonbuild.com/SimpleStart.html]
-After you have done that, clone this repo or download and extract the source.
-Then,
+
+- [ You can follow this guide to install Meson ]( https://mesonbuild.com/SimpleStart.html )
+- After you have done that, clone this repo or download and extract the source.
+- Then,
 ```
 meson build
 meson compile -C build
