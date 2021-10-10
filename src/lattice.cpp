@@ -23,7 +23,9 @@ draw_zone(cairo_t* cr, Lattice& graph, int sf) -> void
     }
     cairo_line_to(cr, scaled_p(0), scaled_p(1));
     cairo_stroke(cr);
+    fmt::print("\r[~] Drew zone with R²: {}", r_sq);
   }
+  fmt::print("\n[+] All zones drawn\n");
 }
 
 auto
@@ -63,6 +65,7 @@ find_vertices(int zones, BasisMat basis, std::unordered_map<int, P_Vec>& r_sq)
   auto ref = P_Vec{ 0, 0 };
   auto position = ref;
 
+  fmt::print("[~] Finding zone verticies...\n");
   int f_zones = 0;
   while (f_zones < zones) {
     // A breadth-first search of the lattice:
@@ -74,11 +77,12 @@ find_vertices(int zones, BasisMat basis, std::unordered_map<int, P_Vec>& r_sq)
       if (!r_sq.contains(norm)) {
         r_sq[norm] = x;
         f_zones++;
+        fmt::print("\r[~] Found zone {} of {}", f_zones, zones);
       }
     }
     position = nearest.col(0);
   }
-  fmt::print("[+] Found {} zones\n", f_zones);
+  fmt::print("\n");
   // for (const auto& [k, v] : r_sq)
   // fmt::print("{}:({},{})\n", k, v(0), v(1));
 }
