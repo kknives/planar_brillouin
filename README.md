@@ -13,14 +13,6 @@ and writes them to zones.png as a 120x120 image.
 
 The more complete message:
 ```
-    ____  __                          ____       _ ____            _     
-   / __ \/ /___ _____  ____ ______   / __ )_____(_) / /___  __  __(_)___ 
-  / /_/ / / __ `/ __ \/ __ `/ ___/  / __  / ___/ / / / __ \/ / / / / __ \
- / ____/ / /_/ / / / / /_/ / /     / /_/ / /  / / / / /_/ / /_/ / / / / /
-/_/   /_/\__,_/_/ /_/\__,_/_/     /_____/_/  /_/_/_/\____/\__,_/_/_/ /_/
-
-Source at: https://github.com/kknives/planar_brillouin
-
   Usage:
     pb zone <zones> [--scale=<sf>] [--size=<sz>] [-o FILE]
 
