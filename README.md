@@ -1,4 +1,5 @@
 # Planar Brillouin
+![test status](https://github.com/kknives/planar_brillouin/actions/workflows/test.yml/badge.svg)
 A simple program to draw Brillouin zones of planar lattice.
 Currently, only draws them for pre-defined lattice with basis (1,0) and (0,1), but
 the approach is general enough to be applied to any lattice with some kind of planar
