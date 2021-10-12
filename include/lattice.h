@@ -2,6 +2,7 @@
 
 #include <Eigen/Dense>
 #include <cairo.h>
+#include <unordered_map>
 
 typedef Eigen::Matrix<float, 2, 1> P_Vec;
 typedef Eigen::Matrix<float, 2, 2> BasisMat;

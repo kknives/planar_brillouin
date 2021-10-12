@@ -1,6 +1,5 @@
 #include "lattice.h"
 #include <Eigen/Geometry>
-#include <bits/stdc++.h>
 #include <fmt/core.h>
 
 auto
