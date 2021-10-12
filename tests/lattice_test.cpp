@@ -37,3 +37,16 @@ TEST_CASE("4 orthogonal neighbours are found from origin", "[find_immediate]")
     REQUIRE(x.dot(x) == 1);
   }
 }
+TEST_CASE("4 orthogonal neighbours are found from a random point",
+          "[find_immediate]")
+{
+  // These neighbours are all distance of 1 unit from origin
+  auto basis = BasisMat{};
+  basis << 1, 0, 0, 1;
+  auto origin = P_Vec{ 23, 72 };
+
+  auto res = find_immediate(origin, basis);
+  for (auto x : res.colwise()) {
+    REQUIRE((x - origin).dot((x - origin)) == 1);
+  }
+}
