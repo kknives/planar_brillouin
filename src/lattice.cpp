@@ -34,6 +34,8 @@ draw(Lattice& graph, int sf, int size, std::string filename) -> void
     cairo_image_surface_create(CAIRO_FORMAT_ARGB32, size, size);
   cairo_t* cr = cairo_create(surface);
 
+  cairo_set_source_rgb(cr, 1, 1, 1);
+  cairo_paint(cr);
   cairo_translate(cr, size / 2, size / 2);
   fmt::print("[+] Drawing...\n");
   draw_zone(cr, graph, sf);
