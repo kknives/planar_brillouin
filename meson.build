@@ -18,7 +18,8 @@ cairo_proj = subproject('cairo')
 cairo_dep = dependency('cairo')
 docopt_proj = subproject('docopt')
 docopt_dep = dependency('docopt')
+catch2_proj = subproject('catch2')
+catch2_dep = dependency('catch2')
 
 exe = executable('pb', sources: ['src/main.cpp', 'src/lattice.cpp'], dependencies: [fmt_dep, eigen_dep, cairo_dep, docopt_dep], include_directories: include_dir, override_options: ['cpp_std=c++20'])
-
-test('basic', exe)
+test_exe = executable('test_pb', sources: ['src/lattice.cpp', 'tests/lattice_test.cpp'], dependencies: [catch2_dep, fmt_dep, eigen_dep, cairo_dep, docopt_dep], include_directories: include_dir, override_options: ['cpp_std=c++20'])
